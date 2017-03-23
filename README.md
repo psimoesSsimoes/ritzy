@@ -1,6 +1,6 @@
 # Ritzy
 
-![ritzy](http://www.clker.com/cliparts/w/d/j/i/X/B/circulo-r-md.png[/img])
+![ritzy](http://imgur.com/nEPUDnM[/img])
 
 **A Complete Shopping List Calculator ❤**
 
