@@ -1,6 +1,6 @@
 # Ritzy
 
-![ritzy](http://imgur.com/nEPUDnM[/img])
+![ritzy](https://imgur.com/nEPUDnM[/img])
 
 **A Complete Shopping List Calculator ❤**
 
