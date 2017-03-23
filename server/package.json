@@ -1,0 +1,28 @@
+{
+  "name": "Ritzy",
+  "version": "0.0.1",
+  "description": "Rest Server for Ritzy App",
+  "author": {
+    "name": "Pedro Simões",
+    "email": "p.simoes@campus.fct.unl.pt"
+  },
+  "website": {
+    "url": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/_seomis_/ritzy"
+  },
+  "private": true,
+  "dependencies": {
+    "emailjs": "^1.0.8",
+    "express": "4.14.0",
+    "moment": "1.7.2",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.1"
+  },
+  "engines": {
+    "node": "7.7.2",
+    "npm": "4.4.1"
+  }
+}

@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser'),
+    restify = require('restify'),
     router = require('./routes');
 
 module.exports = function(server) {
@@ -7,5 +8,6 @@ module.exports = function(server) {
         'extended': true
     }));
     server.use(bodyParser.json());
+    server.use(restify.bodyParser());
     return server;
 }

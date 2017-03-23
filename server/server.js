@@ -4,8 +4,8 @@ var restify = require('restify'),
 
 
 var server = restify.createServer({
-    certificate: fs.readFileSync('../cert/cert.pem'),
-    key: fs.readFileSync('../cert/key.pem'),
+    certificate: fs.readFileSync('./cert/cert.pem'),
+    key: fs.readFileSync('./cert/key.pem'),
     name: 'Ritzy',
 });
 
