@@ -18,7 +18,7 @@ module.exports = function(server) {
     // server.get('/recipes_products/:recipe', recipes_products.ingredients);
     // //given recipe return prep
     // server.get('/recipes/:recipe/prep');
-    server.post('/account/register/', accounts.register);
+    server.post('/account/register', accounts.register);
     // server.post('/account/login/:id');
     // server.post('/account/:id/shopping_list');
     // server.get('/account/:id/shopping_list');
