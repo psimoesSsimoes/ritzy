@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 def loopAllPages(link):
     connection = MongoClient('mongodb://localhost:27017/')
-    db = connection.pyramid
+    db = connection.ritzy
     db.pingodoce.drop()
     for i in range(1, 190):
         allProducts = getProducts(link, '' + str(i))

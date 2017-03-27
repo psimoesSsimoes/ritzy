@@ -63,7 +63,7 @@ def getIngredientsForMobile(aList):
 
 def loopAllCategories():
     connection = MongoClient('mongodb://localhost:27017/')
-    db = connection.pyramid
+    db = connection.ritzy
     for i in categories:
         page = requests.get(i)
         tree = html.fromstring(page.content)

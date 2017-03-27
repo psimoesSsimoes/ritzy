@@ -48,7 +48,7 @@ def n_products_by_category(tree):
 def getAllProducts(list):
     x = 0
     connection = MongoClient('mongodb://localhost:27017/')
-    db = connection.pyramid
+    db = connection.ritzy
     finalProducts = []
     for i in list:
         for j in range(1, int(math.ceil(int(i[1]) / 20)) + 1):
