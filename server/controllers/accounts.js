@@ -25,10 +25,12 @@ module.exports = {
                 if (e) {
                     res.send(e, 400);
                 } else {
+                    EM.dispatchConfirmationRegistry(req);
                     res.send('ok', 200);
                     next;
                 }
             });
+
         }
     },
     lostpassword: function(req, res, next) {
