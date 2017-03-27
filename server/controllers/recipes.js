@@ -1,6 +1,14 @@
 'use strict'
 var Models = require('../models');
 
+//ugly, rewrite later
+var categories = ['']
+
+
+function allowedCategories(cat) {
+    return categories.contains(cat);
+}
+
 module.exports = {
     all: function(req, res, next) {
         Models.Recipe.findAll({}, function(err, products) {
@@ -17,7 +25,7 @@ module.exports = {
         });
     },
     category: function(req, res, next) {
-
-        res.send(200, req.params.category);
+        if (!allowedCategories(req.body.category))
+            res.send("wrong category", 400);
     }
 }

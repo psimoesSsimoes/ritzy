@@ -22,7 +22,7 @@ module.exports = function(server) {
     server.post('/account/register', accounts.register);
     server.post('/account/login/', accounts.login);
     server.get('/recipes/all', recipes.all);
-    server.get('/recipes/:category', recipes.category)
+    server.post('/recipes/category', recipes.category)
     // server.post('/account/:id/shopping_list');
     // server.get('/account/:id/shopping_list');
     // server.post('/account/:id/shopping_list/:product/inc');
