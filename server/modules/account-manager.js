@@ -39,12 +39,12 @@ exports.autoLogin = function(user, pass, callback) {
     });
 }
 
-exports.manualLogin = function(user, pass, callback) {
+exports.manualLogin = function(email, pass, callback) {
     accounts.findOne({
-        user: user
+        email: email
     }, function(e, o) {
         if (o == null) {
-            callback('user-not-found');
+            callback('email-not-found');
         } else {
             validatePassword(pass, o.pass, function(err, res) {
                 if (res) {

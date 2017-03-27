@@ -1,5 +1,6 @@
 var pingo = require('./controllers/pingo'),
-    accounts = require('./controllers/accounts');
+    accounts = require('./controllers/accounts'),
+    recipes = require('./controllers/recipes');
 //  continente = require('../controllers/continente'),
 //  all = require('../controllers/all');
 
@@ -20,7 +21,7 @@ module.exports = function(server) {
     // server.get('/recipes/:recipe/prep');
     server.post('/account/register', accounts.register);
     server.post('/account/login/', accounts.login);
-    server.post('account/delete', accounts.delete);
+    server.get('/recipes/all', recipes.all);
     // server.post('/account/:id/shopping_list');
     // server.get('/account/:id/shopping_list');
     // server.post('/account/:id/shopping_list/:product/inc');

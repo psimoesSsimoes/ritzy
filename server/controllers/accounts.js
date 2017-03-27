@@ -34,10 +34,10 @@ module.exports = {
         }
     },
     login: function(req, res, next) {
-        if (req.body.user == null || req.body.pass == null)
+        if (req.body.email == null || req.body.pass == null)
             res.send('login failed', 400);
         else {
-            AM.manualLogin(req.body.user, req.body.pass, function(e) {
+            AM.manualLogin(req.body.email, req.body.pass, function(e) {
                 if (e) {
                     res.send(e, 400);
                 } else {
