@@ -20,13 +20,14 @@ module.exports = function(server) {
     // //given recipe return prep
     // server.get('/recipes/:recipe/prep');
     server.post('/account/register', accounts.register);
-    server.post('/account/login/', accounts.login);
+    server.post('/account/login', accounts.login);
+    server.post('/account/lostpassword', accounts.lostpassword);
     server.get('/recipes/all', recipes.all);
-    server.post('/recipes/category', recipes.category)
-    // server.post('/account/:id/shopping_list');
-    // server.get('/account/:id/shopping_list');
+    server.get('/recipes/:category', recipes.category)
+    server.post('/shopping_list');
+    server.get('/shopping_list');
     // server.post('/account/:id/shopping_list/:product/inc');
-    // server.post('/account/:id/shopping_list/:product/dec');
+    server.post('/account/:id/shopping_list/:product/dec');
 
 
 };

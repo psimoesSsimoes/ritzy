@@ -44,7 +44,6 @@ def extractIngredientsAndPrep(list):
                     else:
                         preparacoes.append(preparacao)
                         break
-        time.sleep(5)
     return [ingredients, preparacoes]
 
 
@@ -67,9 +66,7 @@ def loopAllCategories():
     connection = MongoClient('mongodb://localhost:27017/')
     db = connection.ritzy
     for i in categories:
-        print(i)
-        page = requests.get(i,headers={'X-Forwarded-For': '192.168.124.2'})#X-Forwarded-For: 192.168.0.2
-        print(page.content)
+        page = requests.get(i,headers={'X-Forwarded-For': '192.168.0.2'})#X-Forwarded-For: 192.168.0.2
         tree = html.fromstring(page.content)
         category = tree.xpath(
             '/html/body/div[3]/table/tr/td[1]/div/span/text()').pop()
@@ -93,7 +90,6 @@ def loopAllCategories():
                 except BulkWriteError as bwe:
                  pprint(bwe.details)
             finalRecipes = []
-        time.sleep(5)
         print(i)
 
 f = open('filter.txt', 'r')
