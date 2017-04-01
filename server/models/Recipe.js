@@ -2,6 +2,8 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+
+
 // email will be the key of our database
 var Recipe_Schema = new Schema({
     category: {
@@ -22,4 +24,4 @@ var Recipe_Schema = new Schema({
 
 });
 
-module.exports = mongoose.model('recipe', Recipe_Schema, 'recipes')
+module.exports = mongoose.model('recipe', Recipe_Schema, 'recipes');

@@ -3,16 +3,13 @@
 var Models = require('../models'),
     AM = require('../modules/account-manager'),
     EM = require('../modules/email-dispatcher'),
-    contants = require('../contants');
+    UT = require('../models/utils');
 
-function bad_regist_fields(req) {
 
-    return req.body.name == null || req.body.email == null || req.body.user == null || req.body.pass == null || req.body.country == null;
-}
 
 module.exports = {
     register: function(req, res, next) {
-        if (bad_regist_fields(req))
+        if (UT.bad_regist_fields(req))
             res.send('wrong req fields', 400);
         else {
             AM.addNewAccount({

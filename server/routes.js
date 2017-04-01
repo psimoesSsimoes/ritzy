@@ -24,10 +24,10 @@ module.exports = function(server) {
     server.post('/account/lostpassword', accounts.lostpassword);
     server.get('/recipes/all', recipes.all);
     server.get('/recipes/:category', recipes.category)
-    server.post('/shopping_list');
-    server.get('/shopping_list');
+    //server.post('/shopping_list');
+    //server.get('/shopping_list');
     // server.post('/account/:id/shopping_list/:product/inc');
-    server.post('/account/:id/shopping_list/:product/dec');
+    //server.post('/account/:id/shopping_list/:product/dec');
 
 
 };
