@@ -5,6 +5,8 @@ var MongoDB = require('mongodb')
 var Server = require('mongodb')
     .Server;
 var moment = require('moment');
+var ObjectId = require('mongodb')
+    .ObjectID;
 
 var dbPort = 27017;
 var dbHost = 'localhost';
@@ -26,4 +28,5 @@ var recipes = db.collection('recipes');
 var accounts = db.collection('accounts');
 DB.recipes = recipes;
 DB.accounts = accounts;
+DB.objectID = ObjectId;
 module.exports = DB;

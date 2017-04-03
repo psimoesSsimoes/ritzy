@@ -24,6 +24,7 @@ module.exports = function(server) {
     server.post('/account/lostpassword', accounts.lostpassword);
     server.get('/recipes/all', recipes.all);
     server.get('/recipes/:category', recipes.category)
+    server.get('/recipes/byid/:id', recipes.id);
     //server.post('/shopping_list');
     //server.get('/shopping_list');
     // server.post('/account/:id/shopping_list/:product/inc');

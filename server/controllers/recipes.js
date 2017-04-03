@@ -1,7 +1,11 @@
 'use strict'
 var Models = require('../models'),
     UT = require('../modules/utils'),
-    DB = require('../modules/db_connector')
+    DB = require('../modules/db_connector'),
+    ObjectId = require('mongodb')
+    .ObjectID;
+
+
 
 //ugly, rewrite later
 var categories = ['']
@@ -41,6 +45,18 @@ module.exports = {
                     else
                         return res.send(all_cat);
                 });
+        }
+    },
+    id: function(req, res, next) {
+        console.log(req.params.id);
+        if (req.params.id == null)
+            res.send('undefined id', 500);
+        else {
+            DB.recipes.findOne({
+                _id: ObjectId(req.params.id)
+            }, function(err, one) {
+                res.send(one);
+            });
         }
     }
 }
