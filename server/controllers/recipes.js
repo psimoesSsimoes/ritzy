@@ -20,13 +20,27 @@ module.exports = {
                 if (err) {
                     res.send('Internal server error', 500);
                 } else {
-                    console.log(all);
+
                     return res.send(all);
                 }
             });
     },
     category: function(req, res, next) {
-        //if (!allowedCategories(req.body.category))
-        //  res.send("wrong category", 400);
+        console.log(req.params.category);
+        if (!UT.allowedCategories(req.params.category))
+            res.send("unexisting category", 400);
+        else {
+            DB.recipes.find({
+                    "category": req.params.category
+                }, {
+
+                })
+                .toArray(function(err, all_cat) {
+                    if (err)
+                        res.send('Internal server error', 500);
+                    else
+                        return res.send(all_cat);
+                });
+        }
     }
 }
