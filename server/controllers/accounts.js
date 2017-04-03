@@ -2,8 +2,7 @@
 
 var Models = require('../models'),
     AM = require('../modules/account-manager'),
-    EM = require('../modules/email-dispatcher'),
-    UT = require('../models/utils');
+    EM = require('../modules/email-dispatcher');
 
 
 

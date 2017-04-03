@@ -1,7 +1,7 @@
 'use strict'
 var Models = require('../models'),
     RM = require('../modules/recipe-manager'),
-    UT = require('../models/utils');
+    UT = require('../modules/utils');
 
 //ugly, rewrite later
 var categories = ['']

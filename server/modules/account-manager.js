@@ -1,34 +1,10 @@
-var crypto = require('crypto')
-var MongoDB = require('mongodb')
-    .Db;
-var Server = require('mongodb')
-    .Server;
-var moment = require('moment');
-
-var dbPort = 27017;
-var dbHost = 'localhost';
-var dbName = 'ritzy';
-
-/* establish the database connection */
-
-var db = new MongoDB(dbName, new Server(dbHost, dbPort, {
-    auto_reconnect: true
-}), {
-    w: 1
-});
-db.open(function(e, d) {
-    if (e) {
-        console.log(e);
-    } else {
-        console.log('connected to database :: ' + dbName);
-    }
-});
-var accounts = db.collection('accounts');
+var crypto = require('crypto'),
+    DB = require('./db_connector');
 
 /* login validation methods */
 
 exports.autoLogin = function(user, pass, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         user: user
     }, function(e, o) {
         if (o) {
@@ -40,7 +16,7 @@ exports.autoLogin = function(user, pass, callback) {
 }
 
 exports.manualLogin = function(email, pass, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         email: email
     }, function(e, o) {
         if (o == null) {
@@ -60,13 +36,13 @@ exports.manualLogin = function(email, pass, callback) {
 /* record insertion, update & deletion methods */
 
 exports.addNewAccount = function(newData, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         user: newData.user
     }, function(e, o) {
         if (o) {
             callback('username-taken');
         } else {
-            accounts.findOne({
+            DB.accounts.findOne({
                 email: newData.email
             }, function(e, o) {
                 if (o) {
@@ -77,7 +53,7 @@ exports.addNewAccount = function(newData, callback) {
                         // append date stamp when record was created //
                         newData.date = moment()
                             .format('MMMM Do YYYY, h:mm:ss a');
-                        accounts.insert(newData, {
+                        DB.accounts.insert(newData, {
                             safe: true
                         }, callback);
                     });
@@ -88,20 +64,20 @@ exports.addNewAccount = function(newData, callback) {
 }
 
 exports.updateAccount = function(newData, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         user: newData.user
     }, function(e, o) {
         o.name = newData.name;
         o.email = newData.email;
         o.country = newData.country;
         if (newData.pass == '') {
-            accounts.save(o, {
+            DB.accounts.save(o, {
                 safe: true
             }, callback);
         } else {
             saltAndHash(newData.pass, function(hash) {
                 o.pass = hash;
-                accounts.save(o, {
+                DB.accounts.save(o, {
                     safe: true
                 }, callback);
             });
@@ -110,7 +86,7 @@ exports.updateAccount = function(newData, callback) {
 }
 
 exports.updatePassword = function(email, newPass, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         email: email
     }, function(e, o) {
         if (e) {
@@ -118,7 +94,7 @@ exports.updatePassword = function(email, newPass, callback) {
         } else {
             saltAndHash(newPass, function(hash) {
                 o.pass = hash;
-                accounts.save(o, {
+                DB.accounts.save(o, {
                     safe: true
                 }, callback);
             });
@@ -129,13 +105,13 @@ exports.updatePassword = function(email, newPass, callback) {
 /* account lookup methods */
 
 exports.deleteAccount = function(id, callback) {
-    accounts.remove({
+    DB.accounts.remove({
         _id: getObjectId(id)
     }, callback);
 }
 
 exports.getAccountByEmail = function(email, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
         email: email
     }, function(e, o) {
         callback(o);
@@ -143,7 +119,7 @@ exports.getAccountByEmail = function(email, callback) {
 }
 
 exports.validateResetLink = function(email, passHash, callback) {
-    accounts.find({
+    DB.accounts.find({
         $and: [{
             email: email,
             pass: passHash
@@ -154,7 +130,7 @@ exports.validateResetLink = function(email, passHash, callback) {
 }
 
 exports.getAllRecords = function(callback) {
-    accounts.find()
+    DB.accounts.find()
         .toArray(
             function(e, res) {
                 if (e) callback(e)
@@ -163,7 +139,7 @@ exports.getAllRecords = function(callback) {
 };
 
 exports.delAllRecords = function(callback) {
-    accounts.remove({}, callback); // reset accounts collection for testing //
+    DB.accounts.remove({}, callback); // reset DB.accounts collection for testing //
 }
 
 /* private encryption & validation methods */
@@ -198,11 +174,11 @@ var validatePassword = function(plainPass, hashedPass, callback) {
 /* auxiliary methods */
 
 var getObjectId = function(id) {
-    return accounts.db.bson_serializer.ObjectID.createFromHexString(id)
+    return DB.accounts.db.bson_serializer.ObjectID.createFromHexString(id)
 }
 
 var findById = function(id, callback) {
-    accounts.findOne({
+    DB.accounts.findOne({
             _id: getObjectId(id)
         },
         function(e, res) {
@@ -214,7 +190,7 @@ var findById = function(id, callback) {
 
 var findByMultipleFields = function(a, callback) {
     // this takes an array of name/val pairs to search against {fieldName : 'value'} //
-    accounts.find({
+    DB.accounts.find({
             $or: a
         })
         .toArray(
