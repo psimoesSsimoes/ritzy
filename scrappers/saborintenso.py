@@ -6,9 +6,10 @@ import time
 import json
 from pymongo import MongoClient
 import sys
+from imp import reload
 
 reload(sys)
-sys.setdefaultencoding('utf8')
+#sys.setdefaultencoding('utf8')
 
 categories = ['http://www.saborintenso.com/chef/caderno-1/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-9/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-19/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-30/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-25/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-41/', 'http://www.saborintenso.com/chef/caderno-42/&ver=tudo/',
               'http://www.saborintenso.com/chef/caderno-45/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-49/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-57/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-54/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-62/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-76/&ver=tudo/', 'http://www.saborintenso.com/chef/caderno-66/', 'http://www.saborintenso.com/chef/caderno-84/&ver=tudo/']
@@ -30,7 +31,8 @@ def extractIngredientsAndPrep(list):
     preparacoes = []
     for w in list:
         print (w)
-        page = requests.get(w,headers={'X-Forwarded-For': '192.168.0.3'})
+        time.sleep(20)
+        page = requests.get(w)
         tree = html.fromstring(page.content)
         ingredients.append(tree.xpath('//*[@id]/ul/li/text()'))
         alltext = tree.xpath('//*[@id]/text()')
@@ -44,7 +46,7 @@ def extractIngredientsAndPrep(list):
                     else:
                         preparacoes.append(preparacao)
                         break
-        time.sleep(5)
+        time.sleep(20)
     return [ingredients, preparacoes]
 
 
@@ -68,7 +70,8 @@ def loopAllCategories():
     db = connection.ritzy
     for i in categories:
         print(i)
-        page = requests.get(i,headers={'X-Forwarded-For': '192.168.124.2'})#X-Forwarded-For: 192.168.0.2
+        time.sleep(20)
+        page = requests.get(i)#X-Forwarded-For: 192.168.0.2
         print(page.content)
         tree = html.fromstring(page.content)
         category = tree.xpath(
@@ -93,7 +96,7 @@ def loopAllCategories():
                 except BulkWriteError as bwe:
                  pprint(bwe.details)
             finalRecipes = []
-        time.sleep(5)
+        time.sleep(20)
         print(i)
 
 f = open('filter.txt', 'r')
