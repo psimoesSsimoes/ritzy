@@ -5,7 +5,7 @@ import requests
 import time
 import json
 from pymongo import MongoClient
-from pymongo import BulkWriteError
+from pymongo.errors import BulkWriteError
 import sys
 from imp import reload
 import random
@@ -86,10 +86,10 @@ def loopAllCategories():
         }
         page = requests.get(i, headers=headers)  # X-Forwarded-For: 192.168.0.2
         time.sleep(randint(10, 55))
-        print(page.content)
         tree = html.fromstring(page.content)
         category = tree.xpath(
             '/html/body/div[3]/table/tr/td[1]/div/span/text()').pop()
+	print(category)
         for a in range(1, calculateNumberOfPages(tree)):
             recipe_name = tree.xpath('//*[@id]/div/p[2]/a/text()')
             recipe_img = tree.xpath('//*[@id]/div/a/img/@src')
@@ -108,12 +108,11 @@ def loopAllCategories():
                                     k], "ingredients_recipe": getIngredientsForMobile(ingredientsAndPrep[0][k]), "prep": ingredientsAndPrep[1][k]})
                 try:
                     result = db.saborintenso.insert_many(
-                        finalRecipes, ordered=False)
+                      (r for r in finalRecipes), ordered=False)
                 except BulkWriteError as bwe:
                     pprint(bwe.details)
             finalRecipes = []
-        time.sleep(randint(10, 40))
-        print(i)
+            time.sleep(randint(10, 40))
 
 f = open('filter.txt', 'r')
 for line in f:
