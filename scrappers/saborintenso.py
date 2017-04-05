@@ -5,6 +5,7 @@ import requests
 import time
 import json
 from pymongo import MongoClient
+from pymongo import BulkWriteError
 import sys
 from imp import reload
 import random
