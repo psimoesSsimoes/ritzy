@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from lxml import html
 import requests
-
+from pprint import pprint
 import time
 import json
 from pymongo import MongoClient
@@ -71,8 +71,7 @@ def getIngredientsForMobile(aList):
             if sorted_list[j].lower() in i.lower():
                 anotherList.append(sorted_list[j])
                 break
-
-    return anotherList
+    return '|'.join(sentence)
 
 
 def loopAllCategories():
