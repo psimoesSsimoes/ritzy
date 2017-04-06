@@ -78,7 +78,6 @@ def loopAllCategories():
     connection = MongoClient('mongodb://localhost:27017/')
     db = connection.ritzy
     random.shuffle(categories)
-    ids=1
     for i in categories:
         print(i)
         headers = {
@@ -105,13 +104,12 @@ def loopAllCategories():
             for k in range(len(recipe_name)):
                 print(recipe_name[k])
                 print(getIngredientsForMobile(ingredientsAndPrep[0][k]))
-                finalRecipes.append({"_id":ids,"category": category, "name": recipe_name[k], "img": recipe_img[
+                finalRecipes.append({"category": category, "name": recipe_name[k], "img": recipe_img[
                                     k], "ingredients_recipe": getIngredientsForMobile(ingredientsAndPrep[0][k]), "prep": ingredientsAndPrep[1][k]})
-		ids+=1
-                try:
-                    result = db.saborintenso.insert_many(
-                      (r for r in finalRecipes), ordered=False)
-                except BulkWriteError as bwe:
+            try:
+                result = db.saborintenso.insert_many(
+                (r for r in finalRecipes), ordered=False)
+            except BulkWriteError as bwe:
                     pprint(bwe.details)
             finalRecipes = []
             time.sleep(randint(10, 40))
