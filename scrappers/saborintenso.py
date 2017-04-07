@@ -91,6 +91,10 @@ def loopAllCategories():
             '/html/body/div[3]/table/tr/td[1]/div/span/text()').pop()
 	print(category)
         for a in range(1, calculateNumberOfPages(tree)):
+            page = requests.get(category+"&page="+a, headers=headers)  # X-Forwarded-For: 192.168.0.2
+	    
+            time.sleep(randint(10, 55))
+            tree = html.fromstring(page.content)
             recipe_name = tree.xpath('//*[@id]/div/p[2]/a/text()')
             recipe_img = tree.xpath('//*[@id]/div/a/img/@src')
             ingredientsAndPrep = extractIngredientsAndPrep(
