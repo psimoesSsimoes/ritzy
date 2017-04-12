@@ -119,10 +119,10 @@ def loopAllCategories():
             try:
                 result = db.saborintenso.insert_many(
                        (r for r in finalRecipes), ordered=False)
-                except BulkWriteError as bwe:
+            except BulkWriteError as bwe:
                     pprint(bwe.details)
-           finalRecipes = []
-           time.sleep(randint(10, 40))   
+            finalRecipes = []
+            time.sleep(randint(10, 40))   
 
 f = open('filter.txt', 'r')
 for line in f:
