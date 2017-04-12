@@ -32,10 +32,13 @@ def calculateNumberOfPages(tree):
     return int(last_page[-1].split("page=", 1)[1])
 
 
-def extractIngredientsAndPrep(list):
+def extractIngredientsAndPrep(list,list2):
+    list+=list2
+    list3 = [s for s in list if not '/chef/perfil/'in s]
+    print(list3)
     ingredients = []
     preparacoes = []
-    for w in list:
+    for w in list3:
         print(w)
         headers = {
             'User-Agent': random.choice(useragents),
@@ -97,26 +100,29 @@ def loopAllCategories():
             tree = html.fromstring(page.content)
             recipe_name = tree.xpath('//*[@id]/div/p[2]/a/text()')
             recipe_img = tree.xpath('//*[@id]/div/a/img/@src')
-            ingredientsAndPrep = extractIngredientsAndPrep(
-                tree.xpath('//*[@id]/div/p[2]/a/@href'))
+            print(tree.xpath('//*[@id]/div/p[2]/a/@href'))
+            ingredientsAndPrep = extractIngredientsAndPrep(tree.xpath('//*[@id]/div/p[2]/a/@href'),tree.xpath('//*[@id]/div/p[1]/a/@href'))
             print("atum")
             print(len(recipe_name))
             print(len(recipe_img))
             print(len(ingredientsAndPrep[0]))
             print(len(ingredientsAndPrep[1]))
             finalRecipes = []
+           
             for k in range(len(recipe_name)):
+
                 print(recipe_name[k])
                 print(getIngredientsForMobile(ingredientsAndPrep[0][k]))
                 finalRecipes.append({"category": category, "name": recipe_name[k], "img": recipe_img[
                                     k], "ingredients_recipe": getIngredientsForMobile(ingredientsAndPrep[0][k]), "prep": ingredientsAndPrep[1][k]})
+            
             try:
                 result = db.saborintenso.insert_many(
-                (r for r in finalRecipes), ordered=False)
-            except BulkWriteError as bwe:
+                       (r for r in finalRecipes), ordered=False)
+                except BulkWriteError as bwe:
                     pprint(bwe.details)
-            finalRecipes = []
-            time.sleep(randint(10, 40))
+           finalRecipes = []
+           time.sleep(randint(10, 40))   
 
 f = open('filter.txt', 'r')
 for line in f:
