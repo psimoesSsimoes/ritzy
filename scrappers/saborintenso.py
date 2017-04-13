@@ -109,7 +109,7 @@ def loopAllCategories():
             print(len(ingredientsAndPrep[1]))
             finalRecipes = []
            
-            for k in range(len(recipe_name)):
+            for k in range(len(ingredientsAndPrep[1])):
 
                 print(recipe_name[k])
                 print(getIngredientsForMobile(ingredientsAndPrep[0][k]))
