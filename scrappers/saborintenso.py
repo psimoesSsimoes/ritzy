@@ -100,7 +100,6 @@ def loopAllCategories():
             tree = html.fromstring(page.content)
             recipe_name = tree.xpath('//*[@id]/div/p[2]/a/text()')
             recipe_img = tree.xpath('//*[@id]/div/a/img/@src')
-            print(tree.xpath('//*[@id]/div/p[2]/a/@href'))
             ingredientsAndPrep = extractIngredientsAndPrep(tree.xpath('//*[@id]/div/p[2]/a/@href'),tree.xpath('//*[@id]/div/p[1]/a/@href'))
             print("atum")
             print(len(recipe_name))
