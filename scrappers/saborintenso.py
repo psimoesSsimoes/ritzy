@@ -53,7 +53,9 @@ def extractIngredientsAndPrep(list,list2):
                 j = i
                 preparacao = []
                 for x in range(j, len(alltext)):
-                    if "\nA equipa do SaborIntenso.com deseja-lhe um bom apetite!" not in alltext[x]:
+		    if "\n\n\n" in alltext[x]:
+			preparacoes.append(preparacao)
+                    elif "\nA equipa do SaborIntenso.com deseja-lhe um bom apetite!" not in alltext[x]:
                         preparacao.append(alltext[x])
                     else:
                         preparacoes.append(preparacao)
@@ -92,7 +94,7 @@ def loopAllCategories():
         category = tree.xpath(
             '/html/body/div[3]/table/tr/td[1]/div/span/text()').pop()
 	print(category)
-        for a in range(9, calculateNumberOfPages(tree)):
+        for a in range(13,25):
             page = requests.get(i+"&page="+str(a), headers=headers)  # X-Forwarded-For: 192.168.0.2
 	    
             time.sleep(randint(10, 55))
